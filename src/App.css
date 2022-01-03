@@ -222,3 +222,7 @@ form > div {
     transform: rotate(360deg);
   }
 }
+
+#filters {
+  width: 10%;
+}
