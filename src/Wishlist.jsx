@@ -1,9 +1,10 @@
 import React from "react";
 
-export default function Header() {
+export default function Wishlist() {
     return (
-        <h2>
-            Wishlist
-        </h2>
+        <div>
+            <h2>Wishlist</h2>
+
+        </div>
     );
 }

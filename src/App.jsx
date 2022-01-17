@@ -12,7 +12,7 @@ import {Box, FormControl, InputLabel} from "@mui/material";
 
 export default function App() {
     const [month, setMonth] = React.useState('');
-    const wishlist = new Set();
+    let wishlist = new Set();
     const handleFilter = (event) => {
         setMonth(event.target.value);
         filteredTrips = [];
@@ -36,19 +36,23 @@ export default function App() {
     );
     const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
+    function checkID(id) {
+        if (id > 3) {
+            return 4;
+        } else {
+            return id;
+        }
+    }
     function renderTrip(t) {
         return (
             <div className="product" key={t.id}>
                 <figure>
                     <div>
-                        <img src={"images/items/" + t.id + ".jpg"} alt="name "/>
+                        <a href={"/edit?id=" + t.id}><img src={"images/items/" + checkID(t.id) + ".jpg"} alt="preview"/></a>
                     </div>
                     <figcaption>
-                        <a href="#. . . ">{t.title}</a>
+                        <p>{t.title}</p>
                         <div>
-              <span>
-                {t.startTrip[2] + "-" + t.startTrip[1] + "-" + t.startTrip[0]}
-              </span>
                         </div>
                         <p>{t.description}</p>
                         <div>
@@ -118,6 +122,8 @@ export default function App() {
                         </h2>
                     )}
                     <section id="products">{filteredTrips.map(renderTrip)}</section>
+                    <Button type="button" variant="contained" id="create"
+                            onClick={() => window.open("/create", "_self")}>Create</Button>
                 </main>
             </div>
             <Footer/>

@@ -57,7 +57,7 @@ header li {
 }
 
 #detail img {
-  max-height: 400;
+  max-height: 400px;
 }
 
 #price {
@@ -225,4 +225,10 @@ form > div {
 
 #filters {
   width: 10%;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
