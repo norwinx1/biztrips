@@ -23,8 +23,8 @@ export default function Edit() {
         console.log(title, desc, startDate, endDate);
         let id = window.location.search.split("=")[1];
         console.log(id);
-        let startDateArray = [startDate.getFullYear(), startDate.getMonth(), startDate.getDay(), startDate.getHours(), startDate.getMinutes()]
-        let endDateArray = [endDate.getFullYear(), endDate.getMonth(), endDate.getDay(), endDate.getHours(), endDate.getMinutes()]
+        let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
+        let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
         const requestOptions = {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},

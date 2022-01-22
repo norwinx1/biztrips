@@ -19,8 +19,8 @@ export default function Create() {
     function handleCreate() {
         loading = true;
         console.log(title, desc, startDate, endDate);
-        let startDateArray = [startDate.getFullYear(), startDate.getMonth(), startDate.getDay(), startDate.getHours(), startDate.getMinutes()]
-        let endDateArray = [endDate.getFullYear(), endDate.getMonth(), endDate.getDay(), endDate.getHours(), endDate.getMinutes()]
+        let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
+        let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
         const requestOptions = {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
