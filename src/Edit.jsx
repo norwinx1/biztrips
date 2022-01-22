@@ -7,17 +7,12 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import "./App.css";
-import useFetch from "./services/useFetch";
-import Spinner from "./Spinner";
 
 export default function Edit() {
     const [title, setTitle] = React.useState('');
     const [desc, setDesc] = React.useState('');
     const [startDate, setStartDate] = React.useState(new Date());
     const [endDate, setEndDate] = React.useState(new Date());
-    const {data: trips, loading: loadingTrips, error: errorTrips} = useFetch(
-        "trips"
-    );
 
     function handleEdit() {
         console.log(title, desc, startDate, endDate);
@@ -47,27 +42,17 @@ export default function Edit() {
         })
     }
 
-    function getTitle() {
-        return trips[window.location.search.split("=")[1]-1].title;
-    }
-
-    function getDesc() {
-        return trips[window.location.search.split("=")[1]-1].description;
-    }
-
-    if (errorTrips) throw errorTrips;
-    if (loadingTrips) return <Spinner/>;
     return (
         <div>
             <Header/>
             <div className="flex">
                 <h2>Edit</h2>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Title" variant="outlined" placeholder={getTitle()}
+                    <TextField id="outlined-basic" label="Title" variant="outlined"
                                onChange={(event) => setTitle(event.target.value)}/>
                 </div>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Description" variant="outlined" placeholder={getDesc()}
+                    <TextField id="outlined-basic" label="Description" variant="outlined"
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div>
                 <div className="wrap">
