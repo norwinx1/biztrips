@@ -15,9 +15,7 @@ export default function Edit() {
     const [endDate, setEndDate] = React.useState(new Date());
 
     function handleEdit() {
-        console.log(title, desc, startDate, endDate);
         let id = window.location.search.split("=")[1];
-        console.log(id);
         let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
         let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
         const requestOptions = {
@@ -26,7 +24,6 @@ export default function Edit() {
             body: JSON.stringify({title: title, description: desc, startTrip: startDateArray, endTrip: endDateArray})
         }
         fetch('http://localhost:3001/trips/' + id, requestOptions).then(response => {
-            console.log(response);
             window.open("/", "_self");
         })
     }
@@ -37,7 +34,6 @@ export default function Edit() {
             method: 'DELETE'
         }
         fetch('http://localhost:3001/trips/' + id, requestOptions).then(response => {
-            console.log(response);
             window.open("/", "_self");
         })
     }

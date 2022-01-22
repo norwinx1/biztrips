@@ -17,7 +17,6 @@ export default function Wishlist() {
             wishlist.push(event);
         }
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
-        console.log(wishlist);
         window.location.reload();
     };
 
@@ -35,7 +34,6 @@ export default function Wishlist() {
     }
 
     function render() {
-        console.log(wishlist);
         if (wishlist === null || wishlist[0] === null || wishlist.length === 0) {
             return (
                 <p id="emptyList">Die Liste ist leer</p>

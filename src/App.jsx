@@ -20,7 +20,6 @@ export default function App() {
                 filteredTrips.push(trips[i]);
             }
         }
-        console.log(filteredTrips);
     };
     const handleWishlist = (event) => {
         if (contains(event)) {
@@ -31,7 +30,6 @@ export default function App() {
             document.getElementById(event.id).innerHTML = "Delete from Triplist";
         }
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
-        console.log(wishlist);
     };
     const {data: trips, loading: loadingTrips, error: errorTrips} = useFetch(
         "trips"
@@ -68,7 +66,6 @@ export default function App() {
     }
 
     function renderButton(t) {
-        console.log(t, wishlist);
         if (wishlist === null) {
             wishlist = [];
         }

@@ -6,7 +6,6 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import Header from "./Header";
 import Footer from "./Footer";
-import Spinner from "./Spinner";
 import "./App.css";
 
 export default function Create() {
@@ -14,11 +13,8 @@ export default function Create() {
     const [desc, setDesc] = React.useState('');
     const [startDate, setStartDate] = React.useState(new Date());
     const [endDate, setEndDate] = React.useState(new Date());
-    let loading = false;
 
     function handleCreate() {
-        loading = true;
-        console.log(title, desc, startDate, endDate);
         let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
         let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
         const requestOptions = {
@@ -27,13 +23,10 @@ export default function Create() {
             body: JSON.stringify({title: title, description: desc, startTrip: startDateArray, endTrip: endDateArray})
         }
         fetch('http://localhost:3001/trips', requestOptions).then(response => {
-            console.log(response);
-            loading = false;
             window.open("/", "_self");
         });
     }
 
-    if (loading) return <Spinner/>;
     return (
         <div>
             <Header/>
