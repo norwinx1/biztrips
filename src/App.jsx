@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-//import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Spinner from "./Spinner";
@@ -12,7 +11,7 @@ import {Box, FormControl, InputLabel} from "@mui/material";
 
 export default function App() {
     const [month, setMonth] = React.useState('');
-    let wishlist = new Set();
+    let wishlist = JSON.parse(localStorage.getItem("wishlist"));
     const handleFilter = (event) => {
         setMonth(event.target.value);
         filteredTrips = [];
@@ -24,11 +23,14 @@ export default function App() {
         console.log(filteredTrips);
     };
     const handleWishlist = (event) => {
-        if (wishlist.has(event)) {
-            wishlist.delete(event);
+        if (contains(event)) {
+            wishlist.splice(wishlist.indexOf(event), 1);
+            document.getElementById(event.id).innerHTML = "Add to Triplist";
         } else {
-            wishlist.add(event);
+            wishlist.push(event);
+            document.getElementById(event.id).innerHTML = "Delete from Triplist";
         }
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
         console.log(wishlist);
     };
     const {data: trips, loading: loadingTrips, error: errorTrips} = useFetch(
@@ -43,6 +45,7 @@ export default function App() {
             return id;
         }
     }
+
     function renderTrip(t) {
         return (
             <div className="product" key={t.id}>
@@ -65,21 +68,34 @@ export default function App() {
     }
 
     function renderButton(t) {
-        if (!wishlist.has(t)) {
-            return <Button type="button" variant="contained" onClick={() => handleWishlist(t)}>
+        console.log(t, wishlist);
+        if (wishlist === null) {
+            wishlist = [];
+        }
+        if (!contains(t)) {
+            return <Button id={t.id} type="button" variant="contained" onClick={() => handleWishlist(t)}>
                 Add to Triplist
             </Button>
         } else {
-            return <Button type="button" variant="contained" onClick={() => handleWishlist(t)}>
-                Remove from Triplist
+            return <Button id={t.id} type="button" variant="contained" onClick={() => handleWishlist(t)}>
+                Delete from Triplist
             </Button>
         }
+    }
+
+    function contains(t) {
+        for (let i = 0; i < wishlist.length; i++) {
+            if (wishlist[i].id === t.id) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // if month selected then filter the trips from month === month
     let filteredTrips = month ? trips.filter((t) => t.startTrip[1] === parseInt(month)) : trips;
 
-    // if error then throw the errror
+    // if error then throw the error
     if (errorTrips) throw errorTrips;
     if (loadingTrips) return <Spinner/>;
     // shorthand for react fragment
@@ -121,9 +137,11 @@ export default function App() {
                             {" " + months[month - 1]}
                         </h2>
                     )}
-                    <section id="products">{filteredTrips.map(renderTrip)}</section>
-                    <Button type="button" variant="contained" id="create"
-                            onClick={() => window.open("/create", "_self")}>Create</Button>
+                    <section className="products">{filteredTrips.map(renderTrip)}</section>
+                    <div className="flex">
+                        <Button type="button" variant="contained" id="create" color="secondary"
+                                onClick={() => window.open("/create", "_self")}>Create</Button>
+                    </div>
                 </main>
             </div>
             <Footer/>
