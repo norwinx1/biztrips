@@ -8,13 +8,14 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import "./App.css";
 import useFetch from "./services/useFetch";
+import Spinner from "./Spinner";
 
 export default function Edit() {
     const [title, setTitle] = React.useState('');
     const [desc, setDesc] = React.useState('');
     const [startDate, setStartDate] = React.useState(new Date());
     const [endDate, setEndDate] = React.useState(new Date());
-    const {data: trips} = useFetch(
+    const {data: trips, loading: loadingTrips, error: errorTrips} = useFetch(
         "trips"
     );
 
@@ -46,17 +47,27 @@ export default function Edit() {
         })
     }
 
+    function getTitle() {
+        return trips[window.location.search.split("=")[1]-1].title;
+    }
+
+    function getDesc() {
+        return trips[window.location.search.split("=")[1]-1].description;
+    }
+
+    if (errorTrips) throw errorTrips;
+    if (loadingTrips) return <Spinner/>;
     return (
         <div>
             <Header/>
             <div className="flex">
                 <h2>Edit</h2>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Title" variant="outlined"
+                    <TextField id="outlined-basic" label="Title" variant="outlined" placeholder={getTitle()}
                                onChange={(event) => setTitle(event.target.value)}/>
                 </div>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Description" variant="outlined"
+                    <TextField id="outlined-basic" label="Description" variant="outlined" placeholder={getDesc()}
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div>
                 <div className="wrap">
@@ -85,7 +96,8 @@ export default function Edit() {
                     <Button type="button" variant="contained" id="create" onClick={() => handleEdit()}>Edit</Button>
                 </div>
                 <div className="wrap">
-                    <Button type="button" variant="contained" color="error" id="create" onClick={() => handleDelete()}>Delete</Button>
+                    <Button type="button" variant="contained" color="error" id="create"
+                            onClick={() => handleDelete()}>Delete</Button>
                 </div>
             </div>
             <Footer/>

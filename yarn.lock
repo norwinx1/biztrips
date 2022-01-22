@@ -4451,7 +4451,7 @@
     "whatwg-mimetype" "^2.3.0"
     "whatwg-url" "^8.0.0"
 
-"date-fns@^2.0.0", "date-fns@^2.25.0", "date-fns@2.13.0":
+"date-fns@^2.0.0", "date-fns@^2.25.0":
   "integrity" "sha512-xm0c61mevGF7f0XpCGtDTGpzEFC/1fpLXHbmFpxZZQJuvByIK2ozm6cSYuU+nxFYOPh2EuCfzUwlTEFwKG+h5w=="
   "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.13.0.tgz"
   "version" "2.13.0"

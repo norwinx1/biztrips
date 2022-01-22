@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DateAdapter from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import Header from "./Header";
@@ -48,22 +48,26 @@ export default function Create() {
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div >
                 <div className="wrap">
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <LocalizationProvider dateAdapter={DateAdapter}>
                         <DateTimePicker
                             renderInput={(props) => <TextField {...props} />}
                             label="Start Date"
                             value={startDate}
+                            inputFormat="dd.MM.yyyy HH:mm"
+                            ampm={false}
                             onChange={(newValue) => {
                                 setStartDate(newValue);
                             }}/>
                     </LocalizationProvider>
                 </div>
                 <div className="wrap">
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <LocalizationProvider dateAdapter={DateAdapter}>
                         <DateTimePicker
                             renderInput={(props) => <TextField {...props} />}
                             label="End Date"
                             value={endDate}
+                            inputFormat="dd.MM.yyyy HH:mm"
+                            ampm={false}
                             onChange={(newValue) => {
                                 setEndDate(newValue);
                             }}/>
