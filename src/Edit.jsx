@@ -27,10 +27,24 @@ export default function Edit() {
         fetch('http://localhost:3001/trips/' + window.location.search.split("=")[1], requestOptions)
             .then(res => res.json())
             .then(response => {
-            setTitle(response.title);
-            setDesc(response.description);
-            setInitialLoad(false);
-        })
+                setTitle(response.title);
+                setDesc(response.description);
+                let start = new Date();
+                start.setFullYear(response.startTrip[0]);
+                start.setMonth(response.startTrip[1]-1);
+                start.setDate(response.startTrip[2]);
+                start.setHours(response.startTrip[3]);
+                start.setMinutes(response.startTrip[4]);
+                setStartDate(start);
+                let end = new Date();
+                end.setFullYear(response.endTrip[0]);
+                end.setMonth(response.endTrip[1]-1);
+                end.setDate(response.endTrip[2]);
+                end.setHours(response.endTrip[3]);
+                end.setMinutes(response.endTrip[4]);
+                setEndDate(end);
+                setInitialLoad(false);
+            })
     }
 
     function handleEdit() {
@@ -39,8 +53,8 @@ export default function Edit() {
         }
         setInitialLoad(true);
         let id = window.location.search.split("=")[1];
-        let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
-        let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
+        let startDateArray = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
+        let endDateArray = [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
         const requestOptions = {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -93,7 +107,8 @@ export default function Edit() {
                                onChange={(event) => setTitle(event.target.value)}/>
                 </div>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Description" variant="outlined" value={desc} error={!descValid}
+                    <TextField id="outlined-basic" label="Description" variant="outlined" value={desc}
+                               error={!descValid}
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div>
                 <div className="wrap">
@@ -102,6 +117,9 @@ export default function Edit() {
                             renderInput={(props) => <TextField {...props} />}
                             label="Start Date"
                             value={startDate}
+                            inputFormat="dd.MM.yyyy HH:mm"
+                            ampm={false}
+                            required={true}
                             onChange={(newValue) => {
                                 setStartDate(newValue);
                             }}/>
@@ -113,6 +131,10 @@ export default function Edit() {
                             renderInput={(props) => <TextField {...props} />}
                             label="End Date"
                             value={endDate}
+                            inputFormat="dd.MM.yyyy HH:mm"
+                            ampm={false}
+                            required={true}
+                            minDateTime={startDate}
                             onChange={(newValue) => {
                                 setEndDate(newValue);
                             }}/>

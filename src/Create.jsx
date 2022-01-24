@@ -92,6 +92,7 @@ export default function Create() {
                             inputFormat="dd.MM.yyyy HH:mm"
                             ampm={false}
                             required={true}
+                            minDateTime={startDate}
                             onChange={(newValue) => {
                                 setEndDate(newValue);
                             }}/>

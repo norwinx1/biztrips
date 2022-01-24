@@ -34,7 +34,7 @@ export default function App() {
     const {data: trips, loading: loadingTrips, error: errorTrips} = useFetch(
         "trips"
     );
-    const months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+    const months = ["All months", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
     function checkID(id) {
         if (id > 3) {
@@ -111,6 +111,7 @@ export default function App() {
                                     label="Month"
                                     onChange={handleFilter}
                                 >
+                                    <MenuItem value={0}>All Months</MenuItem>
                                     <MenuItem value={1}>Januar</MenuItem>
                                     <MenuItem value={2}>Februar</MenuItem>
                                     <MenuItem value={3}>März</MenuItem>
@@ -127,11 +128,11 @@ export default function App() {
                             </FormControl>
                         </Box>
                     </section>
-                    {month && (
+                    {month > 0 && (
                         <h2>
                             Found {filteredTrips.length}
                             {filteredTrips.length > 1 ? " trips" : " trip"} for the month of
-                            {" " + months[month - 1]}
+                            {" " + months[month]}
                         </h2>
                     )}
                     <section className="products">{filteredTrips.map(renderTrip)}</section>
