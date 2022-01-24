@@ -103,12 +103,11 @@ export default function Edit() {
             <div className="flex">
                 <h2>Edit</h2>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Title" variant="outlined" value={title} error={!titleValid}
+                    <TextField id="outlined-basic" label="Title" variant="outlined" required={true} value={title} error={!titleValid}
                                onChange={(event) => setTitle(event.target.value)}/>
                 </div>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Description" variant="outlined" value={desc}
-                               error={!descValid}
+                    <TextField id="outlined-basic" label="Description" variant="outlined" required={true} value={desc} error={!descValid}
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div>
                 <div className="wrap">
