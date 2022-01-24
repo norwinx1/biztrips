@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Footer from "./Footer";
@@ -7,14 +7,32 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import "./App.css";
+import Spinner from "./Spinner";
 
 export default function Edit() {
     const [title, setTitle] = React.useState('');
     const [desc, setDesc] = React.useState('');
     const [startDate, setStartDate] = React.useState(new Date());
     const [endDate, setEndDate] = React.useState(new Date());
+    const [initialLoad, setInitialLoad] = React.useState(true);
+
+    useEffect(getTrip, [])
+
+    function getTrip() {
+        const requestOptions = {
+            method: 'GET'
+        }
+        fetch('http://localhost:3001/trips/' + window.location.search.split("=")[1], requestOptions)
+            .then(res => res.json())
+            .then(response => {
+            setTitle(response.title);
+            setDesc(response.description);
+            setInitialLoad(false);
+        })
+    }
 
     function handleEdit() {
+        setInitialLoad(true);
         let id = window.location.search.split("=")[1];
         let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
         let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
@@ -29,6 +47,7 @@ export default function Edit() {
     }
 
     function handleDelete() {
+        setInitialLoad(true);
         let id = window.location.search.split("=")[1];
         const requestOptions = {
             method: 'DELETE'
@@ -38,17 +57,18 @@ export default function Edit() {
         })
     }
 
+    if (initialLoad) return <Spinner/>
     return (
         <div>
             <Header/>
             <div className="flex">
                 <h2>Edit</h2>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Title" variant="outlined"
+                    <TextField id="outlined-basic" label="Title" variant="outlined" value={title}
                                onChange={(event) => setTitle(event.target.value)}/>
                 </div>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Description" variant="outlined"
+                    <TextField id="outlined-basic" label="Description" variant="outlined" value={desc}
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div>
                 <div className="wrap">

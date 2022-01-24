@@ -7,14 +7,17 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import Header from "./Header";
 import Footer from "./Footer";
 import "./App.css";
+import Spinner from "./Spinner";
 
 export default function Create() {
     const [title, setTitle] = React.useState('');
     const [desc, setDesc] = React.useState('');
     const [startDate, setStartDate] = React.useState(new Date());
     const [endDate, setEndDate] = React.useState(new Date());
+    const [initialLoad, setInitialLoad] = React.useState(false);
 
     function handleCreate() {
+        setInitialLoad(true);
         let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
         let endDateArray = [endDate.getFullYear(), endDate.getMonth()+1, endDate.getDate(), endDate.getHours(), endDate.getMinutes()]
         const requestOptions = {
@@ -27,6 +30,7 @@ export default function Create() {
         });
     }
 
+    if (initialLoad) return <Spinner/>
     return (
         <div>
             <Header/>
