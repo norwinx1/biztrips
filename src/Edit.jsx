@@ -15,6 +15,8 @@ export default function Edit() {
     const [startDate, setStartDate] = React.useState(new Date());
     const [endDate, setEndDate] = React.useState(new Date());
     const [initialLoad, setInitialLoad] = React.useState(true);
+    const [titleValid, setTitleValid] = React.useState(true);
+    const [descValid, setDescValid] = React.useState(true);
 
     useEffect(getTrip, [])
 
@@ -32,6 +34,9 @@ export default function Edit() {
     }
 
     function handleEdit() {
+        if (validateTitle() || validateDesc()) {
+            return;
+        }
         setInitialLoad(true);
         let id = window.location.search.split("=")[1];
         let startDateArray = [startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate(), startDate.getHours(), startDate.getMinutes()]
@@ -57,6 +62,26 @@ export default function Edit() {
         })
     }
 
+    function validateTitle() {
+        if (title === "") {
+            setTitleValid(false);
+            return true;
+        } else {
+            setTitleValid(true);
+        }
+        return false;
+    }
+
+    function validateDesc() {
+        if (desc === "") {
+            setDescValid(false);
+            return true;
+        } else {
+            setDescValid(true);
+        }
+        return false;
+    }
+
     if (initialLoad) return <Spinner/>
     return (
         <div>
@@ -64,11 +89,11 @@ export default function Edit() {
             <div className="flex">
                 <h2>Edit</h2>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Title" variant="outlined" value={title}
+                    <TextField id="outlined-basic" label="Title" variant="outlined" value={title} error={!titleValid}
                                onChange={(event) => setTitle(event.target.value)}/>
                 </div>
                 <div className="wrap">
-                    <TextField id="outlined-basic" label="Description" variant="outlined" value={desc}
+                    <TextField id="outlined-basic" label="Description" variant="outlined" value={desc} error={!descValid}
                                onChange={(event) => setDesc(event.target.value)}/>
                 </div>
                 <div className="wrap">
