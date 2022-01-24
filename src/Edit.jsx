@@ -60,7 +60,7 @@ export default function Edit() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({title: title, description: desc, startTrip: startDateArray, endTrip: endDateArray})
         }
-        fetch('http://localhost:3001/trips/' + id, requestOptions).then(response => {
+        fetch('http://localhost:3001/trips/' + id, requestOptions).then(() => {
             window.open("/", "_self");
         })
     }
@@ -71,7 +71,7 @@ export default function Edit() {
         const requestOptions = {
             method: 'DELETE'
         }
-        fetch('http://localhost:3001/trips/' + id, requestOptions).then(response => {
+        fetch('http://localhost:3001/trips/' + id, requestOptions).then(() => {
             window.open("/", "_self");
         })
     }
